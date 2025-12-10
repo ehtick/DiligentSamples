@@ -63,12 +63,12 @@ DXGI_FORMAT MAKE_SRGB( _In_ DXGI_FORMAT format )
 
 
 //--------------------------------------------------------------------------------------
-HRESULT LoadTextureDataFromFile( __in_z const WCHAR* szFileName, BYTE** ppHeapData,
+HRESULT LoadTextureDataFromFile( __in_z const CHAR* szFileName, BYTE** ppHeapData,
                                 DDS_HEADER** ppHeader,
                                 BYTE** ppBitData, UINT* pBitSize )
 {
     // open the file
-    HANDLE hFile = CreateFileW(szFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
+    HANDLE hFile = CreateFileA(szFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
                                FILE_FLAG_SEQUENTIAL_SCAN, NULL );
     if( INVALID_HANDLE_VALUE == hFile )
         return HRESULT_FROM_WIN32( GetLastError() );
@@ -1064,7 +1064,7 @@ static HRESULT CreateTextureFromDDS( ID3D11Device* pDev, DDS_HEADER* pHeader, __
 
 
 //--------------------------------------------------------------------------------------
-HRESULT CreateDDSTextureFromFile( __in ID3D11Device* pDev, __in_z const WCHAR* szFileName, __out_opt ID3D11ShaderResourceView** ppSRV, bool sRGB )
+HRESULT CreateDDSTextureFromFile( __in ID3D11Device* pDev, __in_z const CHAR* szFileName, __out_opt ID3D11ShaderResourceView** ppSRV, bool sRGB )
 {
     if ( !pDev || !szFileName || !ppSRV )
         return E_INVALIDARG;
@@ -1087,15 +1087,7 @@ HRESULT CreateDDSTextureFromFile( __in ID3D11Device* pDev, __in_z const WCHAR* s
 #if defined(DEBUG) || defined(PROFILE)
     if ( *ppSRV )
     {
-        CHAR strFileA[MAX_PATH];
-        WideCharToMultiByte( CP_ACP, 0, szFileName, -1, strFileA, MAX_PATH, NULL, FALSE );
-        CHAR* pstrName = strrchr( strFileA, '\\' );
-        if( pstrName == NULL )
-            pstrName = strFileA;
-        else
-            pstrName++;
-        
-        (*ppSRV)->SetPrivateData( WKPDID_D3DDebugObjectName, lstrlenA(pstrName), pstrName );
+        (*ppSRV)->SetPrivateData( WKPDID_D3DDebugObjectName, lstrlenA(szFileName), szFileName );
     }
 #endif
 

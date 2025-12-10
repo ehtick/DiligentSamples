@@ -220,10 +220,7 @@ HRESULT CreateTexture2DFromDDS_XXXX8(
     BYTE* bitData = nullptr;
     UINT bitSize = 0;
 
-    std::wostringstream wfileName;
-    wfileName << fileName;
-
-    HRESULT hr = LoadTextureDataFromFile(wfileName.str().c_str(), &heapData, &header, &bitData, &bitSize);
+    HRESULT hr = LoadTextureDataFromFile(fileName, &heapData, &header, &bitData, &bitSize);
     if (FAILED(hr)) {
         delete[] heapData;
         return hr;

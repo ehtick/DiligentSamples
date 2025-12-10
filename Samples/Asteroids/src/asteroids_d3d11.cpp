@@ -191,7 +191,7 @@ Asteroids::Asteroids(AsteroidsSimulation* asteroids, GUI* gui, bool warp)
     CreateGUIResources();
 
     // Load textures
-    ThrowIfFailed(CreateDDSTextureFromFile(mDevice, L"media/starbox_1024.dds", &mSkyboxSRV, true));
+    ThrowIfFailed(CreateDDSTextureFromFile(mDevice, "media/starbox_1024.dds", &mSkyboxSRV, true));
 }
 
 Asteroids::~Asteroids()
@@ -426,9 +426,8 @@ void Asteroids::CreateGUIResources()
     for (int i = -1; i < (int)mGUI->size(); ++i) {
         auto control = i >= 0 ? (*mGUI)[i] : mD3D11Sprite;
         if (control->TextureFile().length() > 0 && mSpriteTextures.find(control->TextureFile()) == mSpriteTextures.end()) {
-            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;            
             ID3D11ShaderResourceView* textureSRV = nullptr;
-            ThrowIfFailed(CreateDDSTextureFromFile(mDevice, converter.from_bytes(control->TextureFile()).c_str(), &textureSRV, true));
+            ThrowIfFailed(CreateDDSTextureFromFile(mDevice, control->TextureFile().c_str(), &textureSRV, true));
             mSpriteTextures[control->TextureFile()] = textureSRV;
         }
     }
