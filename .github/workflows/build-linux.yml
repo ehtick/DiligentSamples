@@ -59,18 +59,18 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: DiligentGraphics/github-action/checkout@v9
+      uses: DiligentGraphics/github-action/checkout@v10
 
     - name: Set up build environment
       if:   success()
-      uses: DiligentGraphics/github-action/setup-build-env@v9
+      uses: DiligentGraphics/github-action/setup-build-env@v10
       with:
         platform:        Linux
         cmake-generator: ${{ matrix.cmake_generator }}
 
     - name: Configure CMake
       if:   success()
-      uses: DiligentGraphics/github-action/configure-cmake@v9
+      uses: DiligentGraphics/github-action/configure-cmake@v10
       with:
         cc:         ${{ matrix.cc }}
         cxx:        ${{ matrix.cxx }}
@@ -81,18 +81,18 @@ jobs:
     - name: Build
       id:   build
       if:   success()
-      uses: DiligentGraphics/github-action/build@v9
+      uses: DiligentGraphics/github-action/build@v10
 
     - name: Sample Tests Vk
       if:   success()
-      uses: DiligentGraphics/github-action/run-sample-tests@v9
+      uses: DiligentGraphics/github-action/run-sample-tests@v10
       with:
         mode:              "vk_sw"
         golden-image-mode: "compare_update"
 
     - name: Sample Tests Vk Compatibility
       if:   success()
-      uses: DiligentGraphics/github-action/run-sample-tests@v9
+      uses: DiligentGraphics/github-action/run-sample-tests@v10
       with:
         mode:              "vk_sw"
         golden-image-mode: "compare"
@@ -100,14 +100,14 @@ jobs:
 
     - name: Sample Tests GL
       if:    ${{ success() || failure() && steps.build.outcome == 'success' }}
-      uses: DiligentGraphics/github-action/run-sample-tests@v9
+      uses: DiligentGraphics/github-action/run-sample-tests@v10
       with:
         mode:              "gl"
         golden-image-mode: "compare_update"
 
     - name: Sample Tests GL with Non-Separable Programs
       if:    ${{ success() || failure() && steps.build.outcome == 'success' }}
-      uses: DiligentGraphics/github-action/run-sample-tests@v9
+      uses: DiligentGraphics/github-action/run-sample-tests@v10
       with:
         mode:                "gl"
         golden-image-mode:   "compare"

@@ -19,10 +19,10 @@ jobs:
 
     steps:
     - name: Clean Disk
-      uses: DiligentGraphics/github-action/clean-disk-ubuntu@v9
+      uses: DiligentGraphics/github-action/clean-disk-ubuntu@v10
 
     - name: Checkout
-      uses: DiligentGraphics/github-action/checkout@v9
+      uses: DiligentGraphics/github-action/checkout@v10
 
     - name: Create CMake
       if: success()
@@ -34,7 +34,7 @@ jobs:
 
     - name: Set up build environment
       if: success()
-      uses: DiligentGraphics/github-action/setup-build-env@v9
+      uses: DiligentGraphics/github-action/setup-build-env@v10
       with:
         platform: Android
 
