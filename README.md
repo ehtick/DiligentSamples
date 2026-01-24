@@ -24,7 +24,7 @@ and follow the [instructions](https://github.com/DiligentGraphics/DiligentEngine
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](License.txt)
 [![Chat on Discord](https://img.shields.io/discord/730091778081947680?logo=discord)](https://discord.gg/t7HGBK7)
 [![Lines of code](https://sloc.xyz/github/DiligentGraphics/DiligentSamples)](https://github.com/DiligentGraphics/DiligentSamples)
-[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/DiligentGraphics/DiligentSamples?svg=true)](https://ci.appveyor.com/project/DiligentGraphics/diligentsamples)
+[![Appveyor Build Status](https://img.shields.io/appveyor/build/DiligentGraphics/diligentsamples/master?logo=appveyor)](https://ci.appveyor.com/project/DiligentGraphics/diligentsamples)
 [![MSVC Code Analysis](https://github.com/DiligentGraphics/DiligentSamples/actions/workflows/msvc_analysis.yml/badge.svg?branch=master)](https://github.com/DiligentGraphics/DiligentSamples/actions/workflows/msvc_analysis.yml?query=branch%3Amaster)
 
 # Table of Contents
