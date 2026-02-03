@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Diligent Graphics LLC
+ *  Copyright 2019-2026 Diligent Graphics LLC
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -161,7 +161,7 @@ void Terrain::CreateResources(IDeviceContext* pContext)
         CreateTextureFromFile("Sand.jpg", loadInfo, m_Device, &m_DiffuseMap);
 
         const StateTransitionDesc Barrier = {m_DiffuseMap, RESOURCE_STATE_UNKNOWN, RESOURCE_STATE_SHADER_RESOURCE, STATE_TRANSITION_FLAG_UPDATE_STATE};
-        pContext->TransitionResourceStates(1, &Barrier);
+        pContext->TransitionResourceState(Barrier);
     }
 
     if (m_TerrainConstants[0] == nullptr || m_TerrainConstants[1] == nullptr)

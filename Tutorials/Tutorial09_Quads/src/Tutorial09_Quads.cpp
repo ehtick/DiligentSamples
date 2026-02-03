@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Diligent Graphics LLC
+ *  Copyright 2019-2026 Diligent Graphics LLC
  *  Copyright 2015-2019 Egor Yusov
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -680,7 +680,7 @@ void Tutorial09_Quads::CreateInstanceBuffer()
     m_BatchDataBuffer.Release();
     m_pDevice->CreateBuffer(InstBuffDesc, nullptr, &m_BatchDataBuffer);
     StateTransitionDesc Barrier(m_BatchDataBuffer, RESOURCE_STATE_UNKNOWN, RESOURCE_STATE_VERTEX_BUFFER, STATE_TRANSITION_FLAG_UPDATE_STATE);
-    m_pImmediateContext->TransitionResourceStates(1, &Barrier);
+    m_pImmediateContext->TransitionResourceState(Barrier);
 }
 
 void Tutorial09_Quads::Update(double CurrTime, double ElapsedTime, bool DoUpdateUI)

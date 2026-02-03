@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Diligent Graphics LLC
+ *  Copyright 2019-2026 Diligent Graphics LLC
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -628,7 +628,7 @@ void Buildings::CreateResources(IDeviceContext* pContext)
             m_OpaqueTexAtlasDefaultState = RESOURCE_STATE_COMMON;
 
         const StateTransitionDesc Barrier = {m_OpaqueTexAtlas, RESOURCE_STATE_UNKNOWN, m_OpaqueTexAtlasDefaultState};
-        pContext->TransitionResourceStates(1, &Barrier);
+        pContext->TransitionResourceState(Barrier);
 
         // Resource is used in multiple contexts, so disable automatic resource transitions.
         m_OpaqueTexAtlas->SetState(RESOURCE_STATE_UNKNOWN);
@@ -812,7 +812,7 @@ void Buildings::AfterDraw(IDeviceContext* pContext)
 {
     // Resources must be manually transitioned to required state.
     const StateTransitionDesc Barrier{m_OpaqueTexAtlas, RESOURCE_STATE_SHADER_RESOURCE, m_OpaqueTexAtlasDefaultState};
-    pContext->TransitionResourceStates(1, &Barrier);
+    pContext->TransitionResourceState(Barrier);
 }
 
 // Alpha component - brightness of self-emission
@@ -1058,7 +1058,7 @@ void Buildings::UpdateAtlas(IDeviceContext* pContext, Uint32 RequiredTransferRat
     if (m_OpaqueTexAtlasDefaultState != RESOURCE_STATE_COPY_DEST)
     {
         const StateTransitionDesc Barrier{m_OpaqueTexAtlas, m_OpaqueTexAtlasDefaultState, RESOURCE_STATE_COPY_DEST};
-        pContext->TransitionResourceStates(1, &Barrier);
+        pContext->TransitionResourceState(Barrier);
     }
 
     Uint32       CopiedCpuToGpu = 0;
@@ -1112,7 +1112,7 @@ void Buildings::UpdateAtlas(IDeviceContext* pContext, Uint32 RequiredTransferRat
     if (m_OpaqueTexAtlasDefaultState != RESOURCE_STATE_COPY_DEST)
     {
         const StateTransitionDesc Barrier{m_OpaqueTexAtlas, RESOURCE_STATE_COPY_DEST, m_OpaqueTexAtlasDefaultState};
-        pContext->TransitionResourceStates(1, &Barrier);
+        pContext->TransitionResourceState(Barrier);
     }
 
     pContext->EndDebugGroup();

@@ -865,7 +865,7 @@ void Asteroids::RenderSubset(Uint32             SubsetNum,
         }
 
         StateTransitionDesc Barrier{mAsteroidsDataBuffers[SubsetNum], RESOURCE_STATE_UNKNOWN, RESOURCE_STATE_SHADER_RESOURCE, STATE_TRANSITION_FLAG_UPDATE_STATE};
-        pCtx->TransitionResourceStates(1, &Barrier);
+        pCtx->TransitionResourceState(Barrier);
 
         // Commit and verify resources
         pCtx->CommitShaderResources(mAsteroidsSRBs[SubsetNum], RESOURCE_STATE_TRANSITION_MODE_VERIFY);
@@ -945,7 +945,7 @@ void Asteroids::Render(float frameTime, const OrbitCamera& camera, const Setting
         mDeviceCtxt->UpdateBuffer(mDrawConstantBuffer, 0, sizeof(DirectX::XMFLOAT4X4), (void*)&viewProjection, RESOURCE_STATE_TRANSITION_MODE_TRANSITION);
         // Explicitly transition the buffer to CONSTANT_BUFFER state
         StateTransitionDesc Barrier{mDrawConstantBuffer, RESOURCE_STATE_UNKNOWN, RESOURCE_STATE_CONSTANT_BUFFER, STATE_TRANSITION_FLAG_UPDATE_STATE};
-        mDeviceCtxt->TransitionResourceStates(1, &Barrier);
+        mDeviceCtxt->TransitionResourceState(Barrier);
     }
 
     if (settings.multithreadedRendering)

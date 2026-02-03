@@ -397,7 +397,7 @@ if (m_Device->GetDeviceInfo().Type == RENDER_DEVICE_TYPE_D3D12)
     m_OpaqueTexAtlasDefaultState = RESOURCE_STATE_COMMON;
             
 const StateTransitionDesc Barrier = {m_OpaqueTexAtlas, RESOURCE_STATE_UNKNOWN, m_OpaqueTexAtlasDefaultState};
-pContext->TransitionResourceStates(1, &Barrier);
+pContext->TransitionResourceState(Barrier);
         
 m_OpaqueTexAtlas->SetState(RESOURCE_STATE_UNKNOWN);
 ```
@@ -408,13 +408,13 @@ Same as with the compute queue, we must transit to `SHADER_RESOURCE` in the grap
 void Buildings::BeforeDraw(IDeviceContext* pContext)
 {
     const StateTransitionDesc Barrier{m_OpaqueTexAtlas, m_OpaqueTexAtlasDefaultState, RESOURCE_STATE_SHADER_RESOURCE};
-    pContext->TransitionResourceStates(1, &Barrier);
+    pContext->TransitionResourceState(Barrier);
 }
 
 void Buildings::AfterDraw(IDeviceContext* pContext)
 {
     const StateTransitionDesc Barrier{m_OpaqueTexAtlas, RESOURCE_STATE_SHADER_RESOURCE, m_OpaqueTexAtlasDefaultState};
-    pContext->TransitionResourceStates(1, &Barrier);
+    pContext->TransitionResourceState(Barrier);
 }
 ```
 
@@ -426,7 +426,7 @@ void Buildings::UpdateAtlas(IDeviceContext* pContext)
     if (m_OpaqueTexAtlasDefaultState != RESOURCE_STATE_COPY_DEST)
     {
         const StateTransitionDesc Barrier{m_OpaqueTexAtlas, m_OpaqueTexAtlasDefaultState, RESOURCE_STATE_COPY_DEST};
-        pContext->TransitionResourceStates(1, &Barrier);
+        pContext->TransitionResourceState(Barrier);
     }
     
     pContext->CopyTexture(...);
@@ -434,7 +434,7 @@ void Buildings::UpdateAtlas(IDeviceContext* pContext)
     if (m_OpaqueTexAtlasDefaultState != RESOURCE_STATE_COPY_DEST)
     {
         const StateTransitionDesc Barrier{m_OpaqueTexAtlas, RESOURCE_STATE_COPY_DEST, m_OpaqueTexAtlasDefaultState};
-        pContext->TransitionResourceStates(1, &Barrier);
+        pContext->TransitionResourceState(Barrier);
     }
 }
 ```

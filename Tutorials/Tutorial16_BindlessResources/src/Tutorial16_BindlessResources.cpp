@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Diligent Graphics LLC
+ *  Copyright 2019-2026 Diligent Graphics LLC
  *  Copyright 2015-2019 Egor Yusov
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -113,7 +113,7 @@ void Tutorial16_BindlessResources::CreatePipelineState()
         // Dynamic buffers can be frequently updated by the CPU
         CreateUniformBuffer(m_pDevice, sizeof(float4x4) * 2, "VS constants CB", &m_VSConstants);
         StateTransitionDesc Barrier{m_VSConstants, RESOURCE_STATE_UNKNOWN, RESOURCE_STATE_CONSTANT_BUFFER, STATE_TRANSITION_FLAG_UPDATE_STATE};
-        m_pImmediateContext->TransitionResourceStates(1, &Barrier);
+        m_pImmediateContext->TransitionResourceState(Barrier);
     }
 
     // Create a pixel shader
@@ -539,7 +539,7 @@ void Tutorial16_BindlessResources::PopulateInstanceBuffer()
     Uint32 DataSize = static_cast<Uint32>(sizeof(InstanceData) * m_Instances.size());
     m_pImmediateContext->UpdateBuffer(m_InstanceBuffer, 0, DataSize, m_Instances.data(), RESOURCE_STATE_TRANSITION_MODE_TRANSITION);
     StateTransitionDesc Barrier(m_InstanceBuffer, RESOURCE_STATE_UNKNOWN, RESOURCE_STATE_VERTEX_BUFFER, STATE_TRANSITION_FLAG_UPDATE_STATE);
-    m_pImmediateContext->TransitionResourceStates(1, &Barrier);
+    m_pImmediateContext->TransitionResourceState(Barrier);
 }
 
 

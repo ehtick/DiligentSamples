@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Diligent Graphics LLC
+ *  Copyright 2019-2026 Diligent Graphics LLC
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -165,7 +165,7 @@ void Tutorial23_CommandQueues::DownSample()
     for (Uint32 Mip = 1; Mip < DownSampleFactor; ++Mip)
     {
         Barrier.FirstMipLevel = Mip - 1;
-        m_pImmediateContext->TransitionResourceStates(1, &Barrier);
+        m_pImmediateContext->TransitionResourceState(Barrier);
 
         m_pImmediateContext->SetRenderTargets(1, &m_GBuffer.ColorRTVs[Mip], nullptr, RESOURCE_STATE_TRANSITION_MODE_VERIFY);
 
@@ -177,7 +177,7 @@ void Tutorial23_CommandQueues::DownSample()
     // Now all mipmaps in m_GBuffer.Color are in SRV state, so update resource state.
     Barrier.FirstMipLevel = DownSampleFactor - 1;
     Barrier.Flags         = STATE_TRANSITION_FLAG_UPDATE_STATE;
-    m_pImmediateContext->TransitionResourceStates(1, &Barrier);
+    m_pImmediateContext->TransitionResourceState(Barrier);
 
     m_pImmediateContext->EndDebugGroup(); // Down sample pass
 }
