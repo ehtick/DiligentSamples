@@ -34,9 +34,6 @@ else()
     add_executable(GLFWDemo ${SOURCES} ${ASSETS})
 endif()
 
-set_target_properties(GLFWDemo PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
-target_compile_features(GLFWDemo PUBLIC cxx_std_14)
-
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES} ${ASSETS})
 target_include_directories(GLFWDemo PRIVATE "../../../DiligentCore")
 if(METAL_SUPPORTED)
@@ -46,6 +43,8 @@ endif()
 target_compile_definitions(GLFWDemo PRIVATE UNICODE)
 
 set_target_properties(GLFWDemo PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
     FOLDER DiligentSamples/Samples
 )
 

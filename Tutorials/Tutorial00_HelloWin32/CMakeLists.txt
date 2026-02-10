@@ -12,6 +12,8 @@ target_include_directories(Tutorial00_HelloWin32 PRIVATE "../../../DiligentCore"
 target_compile_definitions(Tutorial00_HelloWin32 PRIVATE UNICODE)
 
 set_target_properties(Tutorial00_HelloWin32 PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
     FOLDER DiligentSamples/Tutorials
 )
 

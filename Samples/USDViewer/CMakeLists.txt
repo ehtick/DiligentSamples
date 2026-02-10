@@ -89,7 +89,11 @@ PRIVATE
     DiligentFX
     Diligent-Archiver-static
 )
-set_target_properties(USDViewer PROPERTIES CXX_STANDARD 17)
+set_target_properties(USDViewer PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
 target_compile_definitions(USDViewer PRIVATE DILIGENT_FX_SHADERS_DIR="${DILIGENT_FX_SOURCE_DIR}/Shaders" HYDROGENT_SHADERS_DIR="${HYDROGENT_SOURCE_DIR}/shaders")
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/assets PREFIX Assets FILES ${ASSETS} ${SHADERS})
