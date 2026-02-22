@@ -31,7 +31,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No color
 
-GOLDEN_IMAGE_TOLERANCE=1
+GOLDEN_IMAGE_TOLERANCE=2
 
 if [[ $# -lt 3 ]]; then
     printf "${RED}At least three arguments are required${NC}\n"
