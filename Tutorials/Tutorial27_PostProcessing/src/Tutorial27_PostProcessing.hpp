@@ -1,5 +1,5 @@
 /*
- *  Copyright 2024-2025 Diligent Graphics LLC
+ *  Copyright 2024-2026 Diligent Graphics LLC
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@
 #include "ResourceRegistry.hpp"
 #include "PBR_Renderer.hpp"
 #include "PostFXContext.hpp"
+#include "SuperResolutionFactoryLoader.h"
 
 namespace Diligent
 {
@@ -52,7 +53,6 @@ class ScreenSpaceReflection;
 class ScreenSpaceAmbientOcclusion;
 class TemporalAntiAliasing;
 class Bloom;
-class SuperResolution;
 class GBuffer;
 class PBR_Renderer;
 
@@ -83,10 +83,12 @@ private:
     void ComputeSSAO();
     void ComputeLighting();
     void ComputeTAA();
-    void ComputeBloom();
-    void ComputeToneMapping();
-    void ComputeFSR();
-    void ComputeGammaCorrection();
+    void ComputeBloom(ITextureView* pColorBufferSRV);
+    void ComputeToneMapping(ITextureView* pHDRTextureSRV);
+    void ComputeSpatialUpscaling();
+    void ComputeTemporalUpscaling();
+    void ComputeGammaCorrection(ITextureView* pFinalColorSRV);
+    void UpdateSSRSourceColor(ITextureView* pSourceColorSRV);
     void LoadEnvironmentMap(const char* FileName);
 
 private:
@@ -121,6 +123,8 @@ private:
         RESOURCE_IDENTIFIER_IRRADIANCE_MAP,
         RESOURCE_IDENTIFIER_BRDF_INTEGRATION_MAP,
         RESOURCE_IDENTIFIER_TONE_MAPPING,
+        RESOURCE_IDENTIFIER_UPSCALING,
+        RESOURCE_IDENTIFIER_SSR_SOURCE_COLOR,
         RESOURCE_IDENTIFIER_COUNT
     };
 
@@ -135,8 +139,9 @@ private:
     std::unique_ptr<ScreenSpaceAmbientOcclusion> m_ScreenSpaceAmbientOcclusion;
     std::unique_ptr<TemporalAntiAliasing>        m_TemporalAntiAliasing;
     std::unique_ptr<Bloom>                       m_Bloom;
-    std::unique_ptr<SuperResolution>             m_SuperResolution;
     std::unique_ptr<ShaderSettings>              m_ShaderSettings;
+    RefCntAutoPtr<ISuperResolutionFactory>       m_pSRFactory;
+    RefCntAutoPtr<ISuperResolution>              m_pSRUpscaler;
 
     FirstPersonCamera                        m_Camera;
     std::unique_ptr<HLSL::CameraAttribs[]>   m_CameraAttribs;
@@ -154,6 +159,8 @@ private:
 
     Uint32                   m_SSRSettingsDisplayMode = 0;
     PostFXContext::FrameDesc m_PostFXFrameDesc;
+    float                    m_ElapsedTime    = 0.0f;
+    bool                     m_ResetSRHistory = false;
 };
 
 } // namespace Diligent
